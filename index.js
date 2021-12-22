@@ -3,48 +3,37 @@ function semaforo() {
     const buttons = document.querySelector('#buttons');
     const img = document.querySelector('#img');  
 
-    let aleatorio;
+    let colorIndex;
+
+    const nextIndex = () => {
+        if(colorIndex < 2) {
+            colorIndex++;
+        } else {
+            colorIndex = 0;
+        }
+    } 
     
     buttons.addEventListener('click', (e) => {
         const elementos = e.target;
         if(elementos.classList.contains('button-green')) {
-            semaforoVerde();
-            clearInterval(aleatorio);
+            ligar.green();
         }
         if(elementos.classList.contains('button-yellow')) {
-            semaforoAmarelo();
-            clearInterval(aleatorio);
+            ligar.yellow();
         }
         if(elementos.classList.contains('button-red')) {
-            semaforoVermelho();
-            clearInterval(aleatorio);
+            ligar.red();
         }
         if(elementos.classList.contains('button-random')) {
-            semaforoAleatorio();
+            console.log(ligar[nextIndex()]);
             
         }
     }); 
 
-    const semaforoVerde = () => img.src = './img/verde.png';
-    const semaforoAmarelo = () => img.src = './img/amarelo.png';
-    const semaforoVermelho = () => img.src = './img/vermelho.png';
-
-    const cores = [
-        semaforoVerde(),
-        semaforoAmarelo(),
-        semaforoVermelho()
-    ];
-    
-
-    const semaforoAleatorio = () => {
-        clearInterval(aleatorio);
-        aleatorio = setInterval(() => {
-            
-            cores.forEach((valor) =>  {
-                console.log(valor);
-                
-            });
-        }, 2000);
+    const ligar = {
+        'red': () => img.src = './img/vermelho.png',
+        'yellow': () => img.src = './img/amarelo.png',
+        'green': () => img.src = './img/verde.png'
     }
 }
 
