@@ -3,6 +3,7 @@ class Semaforo {
         this.buttons = document.querySelector('#buttons');
         this.random = null;
         this.img = document.querySelector('#img');
+        this.colorIndex;
         this.ligar = {
             'green': () => this.img.src = './img/verde.png',
             'yellow': () => this.img.src = './img/amarelo.png',
@@ -12,8 +13,8 @@ class Semaforo {
     }
 
     currentColor() {
-        let currentColor = Object.keys(this.ligar)[Semaforo.nextIndex()];
-        console.log(this.ligar[currentColor]());
+        let currentColor = Object.keys(this.ligar)[this.nextIndex()];
+        this.ligar[currentColor]();
     }
 
     eventos() {
@@ -36,22 +37,24 @@ class Semaforo {
             }
 
             if(elementos.classList.contains('button-random')) {
-               this.random = setInterval(() => {
+                this.clearInterval();
+                this.random = setInterval(() => {
                     this.currentColor();
-                }, 1000)
+                }, 2000);
+
+                
             }
         });
     }
 
-    static nextIndex() {
-        let colorIndex;
-        if(colorIndex < 2) {
-            colorIndex++
+    nextIndex() {
+        if(this.colorIndex < 2) {
+            this.colorIndex++
         } else {
-            colorIndex = 0;
+            this.colorIndex = 0;
         }
 
-        return colorIndex;
+        return this.colorIndex;
     }
 
     clearInterval() {
